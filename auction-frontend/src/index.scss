@@ -1,0 +1,88 @@
+@use 'bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+$bg-field: #f8f7f6ff;
+$bg-header: #f5efe5ff;
+
+.form-control {
+  background-color: $bg-field;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #fff;
+  color: #4b4b4b;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.header {
+  background-color: $bg-header;
+  padding: 0 3vw;
+
+  nav {
+    ul.link-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      list-style-type: none;
+
+      li {
+        &:first-child {
+          flex: 1;
+          color: #4b4b4b;
+          font-weight: bolder;
+          font-size: calc(10px + 2vmin);
+        }
+
+        &:nth-child(2) {
+          flex: 2;
+          display: flex;
+          justify-content: center;
+          gap: 4vw;
+
+          a {
+            color: #4b4b4b;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            font-size: calc(10px + 2vmin);
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+
+            &.active {
+              color: #9c875f;
+            }
+
+            &.pending {
+              color: #ccc;
+            }
+          }
+        }
+
+        &:last-child {
+          flex: 1;
+          display: flex;
+          justify-content: flex-end;
+
+          .button-logout {
+            color: #fff;
+            background-color: #4b4b4b;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+
+            &:hover {
+              transform: scale(0.95);
+            }
+          }
+        }
+      }
+    }
+  }
+}
