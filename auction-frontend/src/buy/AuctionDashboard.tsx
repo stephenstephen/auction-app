@@ -40,10 +40,10 @@ export default function AuctionDashboard() {
         `${process.env.REACT_APP_API_URL}/auctions/buyer/${userId}?page=${page}&limit=20`,
       );
       const jsonResponse = await response.json();
-      return jsonResponse;
+      return Array.isArray(jsonResponse) ? jsonResponse : [];
     } catch (error) {
       console.error('Failed to fetch auctions:', error);
-      return { auctions: [], totalCount: 0 }; // Return a default structure in case of an error
+      return [];
     }
   };
 
@@ -51,9 +51,9 @@ export default function AuctionDashboard() {
   useEffect(() => {
     const initFetch = async () => {
       if (data.length === 0) {
-        const { auctions, totalCount } = await fetchAuctions(0);
+        const auctions = await fetchAuctions(0);
         setData(auctions);
-        setTotalCount(totalCount); // Set correct total count from the initial fetch
+        setTotalCount(auctions.length);
         setPage(1);
         setHasMore(auctions.length === 20);
       }
@@ -74,9 +74,9 @@ export default function AuctionDashboard() {
     initFetch();
 
     socket?.on('auctionsUpdated', async () => {
-      const { auctions, totalCount } = await fetchAuctions(page);
+      const auctions = await fetchAuctions(page);
       setData(auctions);
-      setTotalCount(totalCount);
+      setTotalCount(auctions.length);
       setHasMore(auctions.length === 20);
     });
 
@@ -98,7 +98,7 @@ export default function AuctionDashboard() {
   };
 
   const next = async () => {
-    const { auctions: nextPageData } = await fetchAuctions(page);
+    const nextPageData = await fetchAuctions(page);
     setData((prevData) => [...prevData, ...nextPageData]);
     setPage((prevPage) => prevPage + 1);
     if (nextPageData.length < 20) setHasMore(false);

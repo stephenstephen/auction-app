@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import http from 'http'
+import { Server as IOServer } from 'socket.io'
 import cors from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 import {
@@ -19,12 +20,30 @@ export const DI = {} as {
   userRepository: EntityRepository<UserEntity>
   auctionRepository: EntityRepository<AuctionEntity>
   bidRepository: EntityRepository<BidEntity>
+  io?: IOServer
 }
 
 export const app = express()
 const port = process.env.SERVER_PORT || 3000
 
+const httpServer = http.createServer(app)
+
+export const io = new IOServer(httpServer, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+})
+
+DI.io = io
+
 export const init = (async () => {
+  io.on('connection', (socket) => {
+    console.log('Socket.IO client connecté:', socket.id)
+    socket.on('disconnect', () => {
+      console.log('Socket.IO client déconnecté:', socket.id)
+    })
+  })
   DI.orm = await MikroORM.init()
   DI.em = DI.orm.em
   DI.userRepository = DI.orm.em.getRepository(UserEntity)
@@ -47,9 +66,9 @@ export const init = (async () => {
   app.use('/bids', BidController)
   app.use((req, res) => res.status(404).json({ message: 'No route found' }))
 
-  DI.server = app.listen(port, () => {
+  DI.server = httpServer.listen(port, () => {
     console.log(
-      `MikroORM express TS example started at http://localhost:${port}`,
+      `MikroORM express TS example + Socket.IO started at http://localhost:${port}`,
     )
   })
 })()

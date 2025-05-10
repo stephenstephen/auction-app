@@ -10,6 +10,10 @@ router.post('/', async (req: Request, res: Response) => {
     const bid = DI.bidRepository.create(req.body)
     await DI.orm.em.persistAndFlush(bid)
 
+    if (DI.io) {
+      DI.io.emit('bid:new', bid)
+    }
+
     res.json(bid)
   } catch (e: any) {
     return res.status(400).json({ message: e.message })
