@@ -21,6 +21,8 @@ export class UserSeeder extends BaseSeeder {
         const newUser = new UserEntity({
           id,
           name,
+          username: name,
+          password: 'password'
         })
         return newUser
       }),

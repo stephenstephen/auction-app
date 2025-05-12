@@ -4,12 +4,20 @@ import { BaseEntity } from './BaseEntity'
 
 @Entity({ tableName: 'users' })
 export class UserEntity extends BaseEntity {
-  constructor(init: EntityInitData<UserEntity, 'name'>) {
+  constructor(init: EntityInitData<UserEntity, 'name' | 'username' | 'password'>) {
     super(init)
     this.name = init.name
+    this.username = init.username
+    this.password = init.password
   }
 
-  @Unique()
   @Property({ columnType: 'varchar(255)' })
   name: string
+
+  @Property()
+  @Unique()
+  username!: string
+
+  @Property()
+  password: string
 }

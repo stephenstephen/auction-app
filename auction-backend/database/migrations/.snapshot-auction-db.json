@@ -44,6 +44,24 @@
           "primary": false,
           "nullable": false,
           "mappedType": "string"
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
         }
       },
       "name": "users",
@@ -51,10 +69,10 @@
       "indexes": [
         {
           "columnNames": [
-            "name"
+            "username"
           ],
           "composite": false,
-          "keyName": "users_name_unique",
+          "keyName": "users_username_unique",
           "primary": false,
           "unique": true
         },

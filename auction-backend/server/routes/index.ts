@@ -1,3 +1,3 @@
-export * from './users'
-export * from './auctions'
-export * from './bids'
+export * from './user.routes'
+export * from './auction.routes'
+export * from './bid.routes'
