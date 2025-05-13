@@ -22,8 +22,40 @@ export const login = async (req: Request, res: Response) => {
   const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
     expiresIn: '1d',
   });
-  res.json({ token });
+  res.json({ token, user });
 };
+
+export const register = async (req: Request, res: Response) => {
+  const { name, username, password } = req.body;
+
+  if (!name || !username || !password) {
+    return res.status(400).json({ message: 'Champs requis manquants.' });
+  }
+
+  const existing = await DI.userRepository.findOne({ username });
+  if (existing) {
+    return res.status(409).json({ message: 'Nom d’utilisateur déjà utilisé.' });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = DI.userRepository.create({
+    name,
+    username,
+    password: hashedPassword,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
+
+  await DI.orm.em.persistAndFlush(user);
+
+  const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
+    expiresIn: '1d',
+  });
+
+  res.status(201).json({ token, user });
+};
+
 
 export const getMe = async (req: Request, res: Response) => {
   const userPayload = req.user as { id: string };

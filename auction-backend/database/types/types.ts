@@ -31,3 +31,4 @@ export enum AuctionStatus {
   ON_HOLD = 'ON_HOLD',
   FINISHED = 'FINISHED',
 }
+

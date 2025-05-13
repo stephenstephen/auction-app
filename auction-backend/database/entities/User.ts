@@ -20,4 +20,5 @@ export class UserEntity extends BaseEntity {
 
   @Property()
   password: string
+
 }

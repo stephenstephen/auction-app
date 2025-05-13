@@ -1,0 +1,35 @@
+import { Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import Landing from './pages/Landing';
+import Login from './features/auth/pages/Login';
+import Register from './features/auth/pages/Register';
+import Buyer from './features/buyer/Buyer';
+import Seller from './features/seller/Seller';
+import Dashboard from './pages/Dashboard';
+import { ProtectedRoute } from '@/features/auth/guards/ProtectedRoute';
+
+export default function App() {
+
+  return (
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/dashboard"
+          element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
+        />
+        <Route
+          path="/seller"
+          element={<ProtectedRoute> <Seller /> </ProtectedRoute>}
+        />
+        <Route
+          path="/buyer"
+          element={<ProtectedRoute> <Buyer /> </ProtectedRoute>}
+        />
+      </Routes>
+    </div>
+  );
+}

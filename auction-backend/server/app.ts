@@ -10,7 +10,7 @@ import {
   RequestContext,
 } from '@mikro-orm/core'
 import { AuctionEntity, BidEntity, UserEntity } from '../database/entities'
-import { AuctionController, BidController, UserController } from './routes'
+import { AuctionController, BidController, UserController, AuthController } from './routes'
 import 'dotenv/config'
 
 export const DI = {} as {
@@ -63,8 +63,36 @@ export const init = (async () => {
   )
   app.use('/auctions', AuctionController)
   app.use('/users', UserController)
+  app.use('/auth', AuthController)
   app.use('/bids', BidController)
   app.use((req, res) => res.status(404).json({ message: 'No route found' }))
+
+  // Affichage récursif des routes Express dans la console
+  function printRoutes(stack: any[], prefix = '') {
+    stack.forEach((layer: any) => {
+      if (layer.route && layer.route.path) {
+        const methods = Object.keys(layer.route.methods).map(m => m.toUpperCase()).join(', ');
+        console.log(`${methods} ${prefix}${layer.route.path}`);
+      } else if (layer.name === 'router' && layer.handle.stack) {
+        // Génère le préfixe à partir de la regexp du routeur
+        let routePrefix = '';
+        if (layer.regexp && layer.regexp.source) {
+          // Extrait le préfixe du regexp
+          const match = layer.regexp.source
+            .replace('^\\/', '/')
+            .replace('\\/?$', '')
+            .match(/\/(\w+)/);
+          if (match) {
+            routePrefix = match[0];
+          }
+        }
+        printRoutes(layer.handle.stack, prefix + routePrefix);
+      }
+    });
+  }
+
+  console.log('--- Liste des routes Express ---');
+  printRoutes(app._router.stack);
 
   DI.server = httpServer.listen(port, () => {
     console.log(
