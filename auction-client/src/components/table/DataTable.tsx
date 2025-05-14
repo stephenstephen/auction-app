@@ -80,9 +80,9 @@ export function DataTable<TData>({
         />
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-xl border shadow bg-white overflow-hidden">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-gray-100 font-semibold">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -103,7 +103,10 @@ export function DataTable<TData>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
+              <TableRow
+                key={row.id}
+                className={`even:bg-gray-50 hover:bg-blue-50 transition-colors h-18`}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

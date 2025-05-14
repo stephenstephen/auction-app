@@ -4,7 +4,7 @@ import Landing from './pages/Landing';
 import Login from './features/auth/pages/Login';
 import Register from './features/auth/pages/Register';
 import Buyer from './features/buyer/Buyer';
-import Seller from './features/seller/Seller';
+import SellerPage from './features/seller/pages/SellerPage';
 import Dashboard from './pages/Dashboard';
 import { ProtectedRoute } from '@/features/auth/guards/ProtectedRoute';
 
@@ -23,7 +23,7 @@ export default function App() {
         />
         <Route
           path="/seller"
-          element={<ProtectedRoute> <Seller /> </ProtectedRoute>}
+          element={<ProtectedRoute> <SellerPage /> </ProtectedRoute>}
         />
         <Route
           path="/buyer"

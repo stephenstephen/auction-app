@@ -7,14 +7,7 @@ dotenv.config()
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret'
 
-export interface AuthenticatedRequest extends Request {
-  user?: {
-    id: string
-    name: string
-  }
-}
-
-export const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -29,8 +22,8 @@ export const authMiddleware = (req: AuthenticatedRequest, res: Response, next: N
   
   let decoded;
   try {
-    decoded = jwt.verify(token, JWT_SECRET) as unknown as { id: string; name: string };
-    req.user = decoded
+    decoded = jwt.verify(token, JWT_SECRET);
+    (req as any).user = decoded;
     next()
   } catch (err) {
     return res.status(401).json({ message: 'Invalid token' });

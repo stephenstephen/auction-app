@@ -10,7 +10,7 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { loginRequest } from '@/features/auth/services/auth.service'
-import { loginSchema } from '@/features/auth/validations/login.schema'
+import { loginSchema } from '@/features/auth/schemas/login.schema'
 import { User } from '@/features/auth/types/auth'
 
 type FormData = yup.InferType<typeof loginSchema>;
@@ -62,21 +62,21 @@ export default function Login() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 space-y-2">
             <div>
-              <Label className="mb-2 block">Nom d’utilisateur</Label>
+              <Label>Nom d’utilisateur</Label>
               <Input {...register('username')} />
               {errors.username && (
                 <p className="text-sm text-red-500">{errors.username.message}</p>
               )}
             </div>
             <div>
-              <Label className="mb-2 block">Mot de passe</Label>
+              <Label>Mot de passe</Label>
               <Input type="password" {...register('password')} />
               {errors.password && (
                 <p className="text-sm text-red-500">{errors.password.message}</p>
               )}
             </div>
             {error && <p className="text-sm text-red-500">{error}</p>}
-            <Button type="submit">Se connecter</Button>
+            <Button type="submit" className="cursor-pointer">Se connecter</Button>
             <p className="text-sm text-center">
               Pas encore de compte ?{' '}
               <Link to="/register" className="underline">

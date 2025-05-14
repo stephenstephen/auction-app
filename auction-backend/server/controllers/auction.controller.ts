@@ -34,3 +34,17 @@ export const createAuction = async (req: Request, res: Response) => {
     return res.status(400).json({ message: e.message });
   }
 };
+
+export const updateAuction = async (req: Request, res: Response) => {
+  try {
+    const auction = await DI.auctionRepository.findOne({ id: req.params.id });
+    if (!auction) {
+      return res.status(404).json({ message: 'Auction not found' });
+    }
+    DI.auctionRepository.assign(auction, req.body);
+    await DI.orm.em.persistAndFlush(auction);
+    res.json(auction);
+  } catch (e: any) {
+    return res.status(400).json({ message: e.message });
+  }
+};

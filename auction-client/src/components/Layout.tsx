@@ -1,11 +1,13 @@
+import { Card, CardContent } from "./ui/card";
 
-
-
-export default function Layout({ user, children }: { user: { name: string }; children?: React.ReactNode }) {
+export default function Layout({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Bienvenue {user?.name}</h1>
-      <div>{children}</div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <Card className="w-full max-w-4xl">
+        <CardContent>
+          {children}
+        </CardContent>
+      </Card>
     </div>
   );
 }

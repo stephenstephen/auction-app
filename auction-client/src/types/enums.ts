@@ -1,0 +1,20 @@
+export enum AuctionStatus {
+  ON_GOING = 'ON_GOING',
+  ON_HOLD = 'ON_HOLD',
+  FINISHED = 'FINISHED',
+}
+
+export enum ItemCategory {
+  VEHICLE = 'VEHICLE',
+  REAL_ESTATE = 'REAL_ESTATE',
+  BABY = 'BABY',
+  ART = 'ART',
+  MUSIC = 'MUSIC',
+  DEVICE = 'DEVICE',
+  AGRICULTURE = 'AGRICULTURE',
+  ANIMALS = 'ANIMALS',
+  SPORT = 'SPORT',
+  FASHION = 'FASHION',
+  FURNITURE = 'FURNITURE',
+  OTHER = 'OTHER',
+}

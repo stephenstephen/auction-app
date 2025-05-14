@@ -1,5 +1,6 @@
 
 export interface User {
+  id: string;
   name: string;
   username: string;
   password: string;
@@ -16,4 +17,4 @@ export interface LoginPayload {
   password: string;
 }
 
-export interface RegisterPayload extends User {}
+export interface RegisterPayload extends Omit<User, "id"> {}

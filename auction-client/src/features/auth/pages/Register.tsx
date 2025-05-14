@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { useState } from 'react'
-import { registerSchema } from '@/features/auth/validations/register.schema'
+import { registerSchema } from '@/features/auth/schemas/register.schema'
 import { useMutation } from '@tanstack/react-query'
 import { registerRequest } from '@/features/auth/services/auth.service'
 import { User } from '@/features/auth/types/auth'
@@ -67,36 +67,22 @@ export default function Register() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 space-y-2">
             <div>
-              <Label className="mb-2 block">Nom complet</Label>
+              <Label>Nom complet</Label>
               <Input {...register('name')} />
               {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
             </div>
             <div>
-              <Label className="mb-2 block">Nom d’utilisateur</Label>
+              <Label>Nom d’utilisateur</Label>
               <Input {...register('username')} />
               {errors.username && <p className="text-sm text-red-500">{errors.username.message}</p>}
             </div>
             <div>
-              <Label className="mb-2 block">Mot de passe</Label>
+              <Label>Mot de passe</Label>
               <Input type="password" {...register('password')} />
               {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
             </div>
-            <div className="flex flex-row gap-2">
-              <Label className="mb-2 block">Rôle</Label>
-              {/* <RadioGroup defaultValue="buyer" {...register('role')}>
-                <div className="flex items-center space-x-2">
-                  {/* <RadioGroupItem value="buyer" id="r1" />
-                  <Label htmlFor="r1">Acheteur</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  {/* <RadioGroupItem value="seller" id="r2" />
-                  <Label htmlFor="r2">Vendeur</Label>
-                </div>
-              </RadioGroup> */}
-              
-            </div>
             {error && <p className="text-sm text-red-500">{error}</p>}
-            <Button type="submit">S'inscrire</Button>
+            <Button type="submit" className="cursor-pointer">S'inscrire</Button>
             <p className="text-sm text-center">
               Déjà un compte ? <Link to="/login" className="underline">Se connecter</Link>
             </p>
