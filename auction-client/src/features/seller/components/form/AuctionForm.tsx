@@ -37,10 +37,9 @@ export function AuctionForm({ defaultValues, onSubmit, submitLabel = 'Valider' }
   });
 
   const handleFormSubmit = (data: AuctionFormFields) => {
-    const seller = "";
     const completeData: CreateAuctionInput = {
       ...data,
-      seller,
+      seller: "",
     };
     onSubmit(completeData);
   };

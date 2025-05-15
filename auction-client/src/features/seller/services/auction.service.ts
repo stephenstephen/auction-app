@@ -8,10 +8,14 @@ export const createAuction = async (payload: CreateAuctionInput) => {
 
 export const getMyAuctions = async (userId: string) => {
   const { data } = await api.get(`/auctions/seller/${userId}`);
-  return data;
+  return data.auctions;
 };
 
 export const updateAuction = async (id: string, payload: CreateAuctionInput) => {
   const { data } = await api.put(`/auctions/${id}`, payload);
   return data;
+};
+
+export const deleteAuction = async (id: string): Promise<void> => {
+  await api.delete(`/auctions/${id}`);
 };

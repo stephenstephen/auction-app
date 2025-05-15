@@ -1,7 +1,8 @@
-import { Entity, Enum, ManyToOne, Property } from '@mikro-orm/core'
+import { Entity, Enum, ManyToOne, Property, OneToMany, Collection } from '@mikro-orm/core'
 import { BaseEntity } from './BaseEntity'
 import { UserEntity } from './User'
 import { AuctionStatus, EntityInitData, ItemCategory } from '../types/types'
+import { BidEntity } from './Bid' // Import BidEntity for the relation
 
 @Entity({ tableName: 'auctions' })
 export class AuctionEntity extends BaseEntity {
@@ -54,4 +55,18 @@ export class AuctionEntity extends BaseEntity {
 
   @Enum({ items: () => AuctionStatus, default: AuctionStatus.ON_GOING })
   status: AuctionStatus
+
+  @OneToMany(() => BidEntity, bid => bid.auction)
+  bids = new Collection<BidEntity>(this);
+
+  @ManyToOne({
+    entity: () => UserEntity,
+    nullable: true,
+    name: 'winner_id',
+    columnType: 'uuid',
+  })
+  winner?: UserEntity;
+
+  @Property({ columnType: 'uuid', nullable: true })
+  winnerId?: string;
 }

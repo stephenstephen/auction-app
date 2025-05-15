@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getMyAuctions, createAuction, updateAuction } from '../services/auction.service';
+import { getMyAuctions, createAuction, updateAuction, deleteAuction } from '../services/auction.service';
 import Layout from '@/components/Layout';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { Auction } from '@/features/seller/types/interface';
@@ -36,13 +36,18 @@ export default function SellerPage() {
         </div>
 
         <DataTable
-          columns={auctionColumns(async (data: Auction) => {
-            // On edit, data must contain the id (from row.original)
-            if (data.id) {
-              await updateAuction(data.id, { ...data, seller: user?.id as string });
-              await fetchAuctions();
-            }
-          })}
+            columns={auctionColumns(
+              async (data: Auction) => {
+                if (data.id) {
+                  await updateAuction(data.id, { ...data, seller: user?.id as string });
+                  await fetchAuctions();
+                }
+              },
+              async (id: string) => {
+                await deleteAuction(id);
+                await fetchAuctions();
+              }
+            )}
           data={auctions}
         />
       </div>

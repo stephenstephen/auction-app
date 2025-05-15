@@ -7,6 +7,7 @@ import Buyer from './features/buyer/Buyer';
 import SellerPage from './features/seller/pages/SellerPage';
 import Dashboard from './pages/Dashboard';
 import { ProtectedRoute } from '@/features/auth/guards/ProtectedRoute';
+import { Toaster } from 'sonner';
 
 export default function App() {
 
@@ -30,6 +31,7 @@ export default function App() {
           element={<ProtectedRoute> <Buyer /> </ProtectedRoute>}
         />
       </Routes>
+      <Toaster richColors position="bottom-right" closeButton />
     </div>
   );
 }

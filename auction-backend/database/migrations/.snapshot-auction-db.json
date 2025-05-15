@@ -62,16 +62,6 @@
           "primary": false,
           "nullable": false,
           "mappedType": "string"
-        },
-        "role": {
-          "name": "role",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "default": "'buyer'",
-          "mappedType": "string"
         }
       },
       "name": "users",
@@ -214,6 +204,15 @@
             "FINISHED"
           ],
           "mappedType": "enum"
+        },
+        "winner_id": {
+          "name": "winner_id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "uuid"
         }
       },
       "name": "auctions",
@@ -242,6 +241,19 @@
           ],
           "referencedTableName": "public.users",
           "deleteRule": "cascade",
+          "updateRule": "cascade"
+        },
+        "auctions_winner_id_foreign": {
+          "constraintName": "auctions_winner_id_foreign",
+          "columnNames": [
+            "winner_id"
+          ],
+          "localTableName": "public.auctions",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.users",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         }
       }

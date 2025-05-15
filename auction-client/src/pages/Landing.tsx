@@ -26,9 +26,9 @@ export default function Landing() {
         <p className="text-lg sm:text-xl mb-8 opacity-80">
           Découvrez des produits uniques, enchérissez et gagnez des offres exceptionnelles.
         </p>
-        <Button className="cursor-pointer" 
+        <Button
           onClick={() => navigate('/login')} 
-          className="px-8 py-3 text-xl bg-gray-800 hover:bg-gray-700 text-gray-100 rounded-full transition-all duration-300 transform hover:scale-105">
+          className="px-8 py-3 text-xl bg-gray-800 hover:bg-gray-700 text-gray-100 rounded-full transition-all duration-300 transform hover:scale-105 cursor-pointer">
           Se connecter
         </Button>
       </div>
