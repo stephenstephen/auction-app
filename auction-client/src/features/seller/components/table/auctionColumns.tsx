@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { CircleChevronDown } from 'lucide-react';
+import { AuctionStatus } from '@/types/enums';
 
 export const auctionColumns = (
   onUpdated: (data: Auction) => Promise<void>,
@@ -42,7 +43,7 @@ export const auctionColumns = (
     header: 'Actions',
     cell: ({ row }) => {
       const auction = row.original;
-      const { handleDelete, handleUpdate, isDeleting } = useAuctionActions({
+      const { handleDelete, handleUpdate, isDeleting, handleClose, isClosing } = useAuctionActions({
         onUpdated,
         onDeleted,
         auction,
@@ -74,6 +75,22 @@ export const auctionColumns = (
               loading={isDeleting}
               onConfirm={handleDelete}
             />
+
+            {auction.status === AuctionStatus.ON_GOING && (
+              <ConfirmDialog
+                trigger={
+                  <DropdownMenuItem onSelect={e => e.preventDefault()}>
+                    Clôturer l’enchère
+                  </DropdownMenuItem>
+                }
+                title={`Clôturer l’enchère "${auction.title}" ?`}
+                description="Cela mettra fin à l’enchère immédiatement. Cette action est irréversible."
+                confirmLabel="Clôturer"
+                cancelLabel="Annuler"
+                loading={isClosing}
+                onConfirm={handleClose}
+              />
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );

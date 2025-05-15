@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { auctionSchema } from '@/features/seller/schemas/auction.schema';
@@ -36,12 +38,20 @@ export function AuctionForm({ defaultValues, onSubmit, submitLabel = 'Valider' }
     defaultValues,
   });
 
-  const handleFormSubmit = (data: AuctionFormFields) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleFormSubmit = async (data: AuctionFormFields) => {
+    setIsSubmitting(true);
     const completeData: CreateAuctionInput = {
       ...data,
       seller: "",
     };
-    onSubmit(completeData);
+    try {
+      await onSubmit(completeData);
+      toast.success('Enchère créée avec succès !');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -86,9 +96,9 @@ export function AuctionForm({ defaultValues, onSubmit, submitLabel = 'Valider' }
         <p className="text-sm text-red-500">{errors.category?.message}</p>
       </div>
 
-      <Button type="submit" className="w-full">
-        {submitLabel}
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? 'Envoi...' : submitLabel}
       </Button>
     </form>
   );
-} 
+}

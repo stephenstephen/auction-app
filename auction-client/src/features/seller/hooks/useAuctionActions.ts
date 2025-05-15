@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Auction } from '../types/interface';
+import { closeAuction } from '../services/auction.service';
 
 interface UseAuctionActionsProps {
   onUpdated: (data: Auction) => Promise<void>;
@@ -8,8 +9,11 @@ interface UseAuctionActionsProps {
   auction: Auction;
 }
 
+import { AuctionStatus } from "@/types/enums";
+
 export function useAuctionActions({ onUpdated, onDeleted, auction }: UseAuctionActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -33,9 +37,29 @@ export function useAuctionActions({ onUpdated, onDeleted, auction }: UseAuctionA
     }
   };
 
+  const handleClose = async () => {
+    try {
+      setIsClosing(true);
+      const res = await closeAuction(auction.id);
+      toast.success(
+        res.winnerUsername
+          ? `Enchère clôturée — Gagnant : ${res.winnerUsername}`
+          : 'Enchère clôturée sans enchères.'
+      );
+      await onUpdated({ ...auction, status: AuctionStatus.FINISHED });
+    } catch (err) {
+      console.error(err);
+      toast.error('Erreur lors de la clôture.');
+    } finally {
+      setIsClosing(false);
+    }
+  };
+
   return {
     isDeleting,
+    isClosing,
     handleDelete,
     handleUpdate,
+    handleClose,
   };
 }

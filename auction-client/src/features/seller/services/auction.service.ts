@@ -19,3 +19,8 @@ export const updateAuction = async (id: string, payload: CreateAuctionInput) => 
 export const deleteAuction = async (id: string): Promise<void> => {
   await api.delete(`/auctions/${id}`);
 };
+
+export const closeAuction = async (id: string): Promise<{ message: string; winnerUsername: string | null }> => {
+  const { data } = await api.post(`/auctions/${id}/close`);
+  return data;
+};

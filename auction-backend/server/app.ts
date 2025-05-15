@@ -12,6 +12,8 @@ import {
 import { AuctionEntity, BidEntity, UserEntity } from '../database/entities'
 import { AuctionController, BidController, UserController, AuthController } from './routes'
 import 'dotenv/config'
+import { setupSocketIO } from './socket'
+import { startAuctionCron } from './cron/auctionCron'
 
 export const DI = {} as {
   server: http.Server
@@ -38,12 +40,7 @@ export const io = new IOServer(httpServer, {
 DI.io = io
 
 export const init = (async () => {
-  io.on('connection', (socket) => {
-    console.log('Socket.IO client connecté:', socket.id)
-    socket.on('disconnect', () => {
-      console.log('Socket.IO client déconnecté:', socket.id)
-    })
-  })
+  setupSocketIO();
   DI.orm = await MikroORM.init()
   DI.em = DI.orm.em
   DI.userRepository = DI.orm.em.getRepository(UserEntity)
@@ -98,5 +95,6 @@ export const init = (async () => {
     console.log(
       `MikroORM express TS example + Socket.IO started at http://localhost:${port}`,
     )
+    startAuctionCron();
   })
 })()

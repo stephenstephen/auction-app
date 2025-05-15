@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { DI } from '../app';
 import { QueryOrder } from '@mikro-orm/core';
-import { AuctionStatus } from '@/database/types/types';
+import { AuctionStatus } from '../../database/types/types';
 
 export const getBuyerAuctions = async (req: Request, res: Response) => {
   const { page = 0, limit = 10 } = req.query;

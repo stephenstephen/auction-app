@@ -7,9 +7,28 @@ import Buyer from './features/buyer/Buyer';
 import SellerPage from './features/seller/pages/SellerPage';
 import Dashboard from './pages/Dashboard';
 import { ProtectedRoute } from '@/features/auth/guards/ProtectedRoute';
-import { Toaster } from 'sonner';
+import { Toaster, toast } from 'sonner';
+import { socket } from '@/lib/socket';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useEffect } from 'react';
 
 export default function App() {
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) return;
+
+    socket.emit('auth', user.id);
+
+    socket.on('auction:won', (data) => {
+      console.log('⚡ Notification gagnant :', data);
+      toast.success(`Bravo ${data.winnerUsername}, vous avez remporté l'enchère "${data.title}" !`);    });
+
+    return () => {
+      socket.off('auction:won');
+    };
+  }, [user]);
 
   return (
     <div>

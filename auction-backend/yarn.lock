@@ -918,6 +918,7 @@ __metadata:
     jsonwebtoken: ^9.0.2
     jwks-rsa: ^3.2.0
     morgan: ~1.9.1
+    node-cron: ^4.0.5
     nodemon: ^3.0.1
     socket.io: ^4.8.1
     ts-node: ^10.9.1
@@ -2578,6 +2579,13 @@ __metadata:
   dependencies:
     node-gyp: latest
   checksum: 2508bd2d2981945406243a7bd31362fc7af8b70b8b4d65f869c61731800058fb818cc2fd36c8eac714ddd0e568cc85becf5e165cebbdf7b5024d5151bbc75ea1
+  languageName: node
+  linkType: hard
+
+"node-cron@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "node-cron@npm:4.0.5"
+  checksum: 245ebdee48921a94c46d2f222f399de29491be6031dd6b144b4f0c187ccd69b2ff3ff5f5b6667ac43f7b71179ba83408d67663af52e9e366fe833d7751aeddb1
   languageName: node
   linkType: hard
 
