@@ -7,28 +7,15 @@ import Buyer from './features/buyer/Buyer';
 import SellerPage from './features/seller/pages/SellerPage';
 import Dashboard from './pages/Dashboard';
 import { ProtectedRoute } from '@/features/auth/guards/ProtectedRoute';
-import { Toaster, toast } from 'sonner';
-import { socket } from '@/lib/socket';
+import { Toaster } from 'sonner';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { useEffect } from 'react';
+import { useAuctionSocket } from '@/features/auth/hooks/useAuctionSocket';
 
 export default function App() {
 
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (!user) return;
-
-    socket.emit('auth', user.id);
-
-    socket.on('auction:won', (data) => {
-      console.log('⚡ Notification gagnant :', data);
-      toast.success(`Bravo ${data.winnerUsername}, vous avez remporté l'enchère "${data.title}" !`);    });
-
-    return () => {
-      socket.off('auction:won');
-    };
-  }, [user]);
+  useAuctionSocket(user);
 
   return (
     <div>

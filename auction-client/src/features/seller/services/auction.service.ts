@@ -21,6 +21,6 @@ export const deleteAuction = async (id: string): Promise<void> => {
 };
 
 export const closeAuction = async (id: string): Promise<{ message: string; winnerUsername: string | null }> => {
-  const { data } = await api.post(`/auctions/${id}/close`);
+  const { data } = await api.patch(`/auctions/${id}/close`);
   return data;
 };
