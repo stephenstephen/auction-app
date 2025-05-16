@@ -1,7 +1,8 @@
-import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { cn } from "@/lib/utils"
-import { Loader2 } from "lucide-react"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 type Props = {
   children: React.ReactNode

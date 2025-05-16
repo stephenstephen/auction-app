@@ -1,4 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
+import { Toaster } from 'sonner';
+
+import { ProtectedRoute } from '@/features/auth/guards/ProtectedRoute';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useAuctionSocket } from '@/features/auth/hooks/useAuctionSocket';
+
 import Header from './components/Header';
 import Landing from './pages/Landing';
 import Login from './features/auth/pages/Login';
@@ -6,10 +12,6 @@ import Register from './features/auth/pages/Register';
 import Buyer from './features/buyer/Buyer';
 import SellerPage from './features/seller/pages/SellerPage';
 import Dashboard from './pages/Dashboard';
-import { ProtectedRoute } from '@/features/auth/guards/ProtectedRoute';
-import { Toaster } from 'sonner';
-import { useAuth } from '@/features/auth/hooks/useAuth';
-import { useAuctionSocket } from '@/features/auth/hooks/useAuctionSocket';
 
 export default function App() {
 

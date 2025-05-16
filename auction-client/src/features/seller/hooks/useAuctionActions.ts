@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
+
+import { AuctionStatus } from "@/types/enums";
+
 import { Auction } from '../types/interface';
 import { closeAuction } from '../services/auction.service';
 
@@ -9,7 +12,6 @@ interface UseAuctionActionsProps {
   auction: Auction;
 }
 
-import { AuctionStatus } from "@/types/enums";
 
 export function useAuctionActions({ onUpdated, onDeleted, auction }: UseAuctionActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);

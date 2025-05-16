@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { socket } from '@/lib/socket';
 import { toast } from 'sonner';
+
+import { socket } from '@/lib/socket';
 import { User } from '@/features/auth/types/auth';
 
 export function useAuctionSocket(user?: User | null) {

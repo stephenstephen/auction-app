@@ -1,4 +1,5 @@
 import api from '@/lib/api';
+
 import { CreateAuctionInput } from '../types/interface';
 
 export const createAuction = async (payload: CreateAuctionInput) => {
